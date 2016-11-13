@@ -24,7 +24,7 @@ $(document).ready(function() {
     //call buttons from array function    
     makeButton();
     //clear form
-    //document.getElementById("text").reset(); 
+    document.getElementById("newEntry").reset(); 
     //stop re-run of function at outer level (propogation!!)
     return false;
   });
