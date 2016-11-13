@@ -1,0 +1,11 @@
+/*creates spacing from top of page*/
+.container {
+	margin-top: 25px;
+}
+
+/*spaces out buttons*/
+.btn {
+	background-color: #32A0AE;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
