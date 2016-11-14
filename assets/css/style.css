@@ -3,9 +3,14 @@
 	margin-top: 25px;
 }
 
-/*spaces out buttons*/
+/*spaces out buttons and sets color*/
 .btn {
 	background-color: #32A0AE;
 	margin-bottom: 10px;
 	margin-right: 10px;
+}
+
+/*spaces out gifs*/
+.gifPic {
+	margin: 15px
 }
