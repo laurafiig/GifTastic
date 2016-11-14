@@ -16,9 +16,32 @@ $(document).ready(function() {
  
 //****************************// 
 
-  //function to populate gifs
-  function makeGifs() {
-        //pull search term from button text
+  //call 'buttons from array' function
+  makeButton()
+
+//****************************// 
+  
+  //when add button is clicked
+  $("#add").on("click", function() {  
+    //read value from form
+    var newItem = $("#text").val();
+    //add value to array
+    myStuff.push(newItem);
+    //clear existing buttons
+    $(".showGif").remove()
+    //call 'buttons from array' function    
+    makeButton();
+    //clear form
+    document.getElementById("newEntry").reset(); 
+    //stop re-run of function at outer level (propogation!!)
+    return false;
+  });
+
+//****************************//
+
+  //when gif button is clicked
+  $(".showGif").on("click", function() {
+    //pull search term from button text
     searchName = $(this).text();
     //url to query Giphy API - put search term in search string, other parameters are: limit 10 pictures, public key included
     var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchName + "&limit=10&api_key=dc6zaTOxFJmzC"
@@ -50,40 +73,19 @@ $(document).ready(function() {
         });
 
     }); 
-  };
-
-
-//****************************// 
-
-  //call 'buttons from array' function
-  makeButton();
-
-//****************************// 
-
-  
-  //when add button is clicked
-  $("#add").on("click", function() {  
-    //read value from form
-    var newItem = $("#text").val();
-    //add value to array
-    myStuff.push(newItem);
-    //clear existing buttons
-    $(".showGif").remove()
-    //call 'buttons from array' function    
-    makeButton();
-    //clear form
-    document.getElementById("newEntry").reset(); 
-    //stop re-run of function at outer level (propogation!!)
-    return false;
   });
 
 //****************************//
 
-  //when gif button is clicked
-  $(document).on("click", ".showGif", makeGifs);
-
-//****************************//
-
-
 });
 
+
+//issue to fix
+//  button add breaks button on click
+//  probably because of return false
+//  can remedy by having two functions
+//  or repeating the code, which is 
+//  basically the same thing, but D.R.Y.
+//  event.stopPropagation(); 
+//can I define two functions at once?
+//or define one as the other???
