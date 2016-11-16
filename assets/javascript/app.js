@@ -21,7 +21,7 @@ $(document).ready(function() {
     //pull search term from button text
     searchName = $(this).text();
     //url to query Giphy API - puts search term in search string, other parameters are: limit 10 pictures, public key included
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchName + "&limit=10&api_key=dc6zaTOxFJmzC"
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchName + "&limit=10&api_key=dc6zaTOxFJmzC"
     //run AJAX call
     $.ajax({url: queryURL, method: 'GET'})
       //create object
