@@ -2,12 +2,12 @@ $(document).ready(function() {
 
 //****************************// 
 
-  //array of things
-  var myStuff = ["Puppies","Dogs","Mini Horses","Kittens","Ferrets","Baby Goats","Baby Animals","Tolkien","Harry Potter","Star Wars","Star Trek","Space","Galaxies","Hawaii","Beaches","Mountains","Stained Glass","Fused Glass","Art Glass"]
+  //array of things I like
+  var myStuff = ["Puppies","Dogs","Mini Horses","Kittens","Ferrets","Baby Goats","Baby Animals","Tolkien","Harry Potter","Star Wars","Star Trek","Galaxies","Hawaii","Beaches","Mountains","Stained Glass","Fused Glass","Art Glass"]
 
 //****************************// 
   
-  //create buttons from array function
+  //function to create buttons from array
   function makeButton() {
     for (i=0; i<myStuff.length; i++){
       $("#buttons").append('<button type="button" class="btn btn-default showGif">' + myStuff[i]);
@@ -17,41 +17,49 @@ $(document).ready(function() {
 //****************************// 
 
   //function to populate gifs
-  function makeGifs() {
-        //pull search term from button text
+  function makeGifs() { 
+    //pull search term from button text
     searchName = $(this).text();
-    //url to query Giphy API - put search term in search string, other parameters are: limit 10 pictures, public key included
+    //url to query Giphy API - puts search term in search string, other parameters are: limit 10 pictures, public key included
     var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchName + "&limit=10&api_key=dc6zaTOxFJmzC"
-    //var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
     //run AJAX call
     $.ajax({url: queryURL, method: 'GET'})
       //create object
       .done(function(response) {
-        //log response
-        console.log(response);
         //clears previous gifs
-        $("img").remove()        
-        //loop through object array to load gif in html
+        $("img").remove()  
+        //loop through Giphy object array
         for (i=0; i<response.data.length; i++){
-          $("#gifsHere").append('<img src=' + response.data[i].images.fixed_height_still.url + ' class="still" id="' + i + '">') }
+          //creates variable to build image div
+          var pic = $('<img class="still" id="' + i + '">')
+          //adds url source for still picture
+          $(pic).attr('src', response.data[i].images.fixed_height_still.url); 
+          //adds data attributes for url's of both picture types for faster loading
+          $(pic).attr('data-still', response.data[i].images.fixed_height_still.url);
+          $(pic).attr('data-move', response.data[i].images.fixed_height.url);
+          //adds pic to html
+          $('#gifsHere').append(pic)
+        }
+        
         //animate gif on click
-        $(document).on("click", ".still", function() {
-          swapVal = $("img").attr("class");
-            loc = $(this).attr("id");
-            $(this).attr("src", response.data[loc].images.fixed_height.url);
-            $(this).attr("class", "move");
-        });
-        //still gif on click
-        $(document).on("click", ".move", function() {
-          swapVal = $("img").attr("class");  
-            loc = $(this).attr("id");
-            $(this).attr("src", response.data[loc].images.fixed_height_still.url);
-            $(this).attr("class", "still");
-        });
-
-    }); 
-  };
-
+        //when div with still class is clicked
+        $(document).on("click", ".still", function() {        
+          //changes the img src to animated pic
+          $(this).attr("src", $(this).data("move")); 
+          //changes the class
+          $(this).attr("class", "move");
+        });  
+        
+        //stop gif on click
+        //when div with move class is clicked  
+        $(document).on("click", ".move", function() {        
+          //changes the img src to still pic
+          $(this).attr("src", $(this).data("still")); 
+          //changes the class
+          $(this).attr("class", "still");
+        });          
+      });
+  }
 
 //****************************// 
 
@@ -60,7 +68,6 @@ $(document).ready(function() {
 
 //****************************// 
 
-  
   //when add button is clicked
   $("#add").on("click", function() {  
     //read value from form
@@ -83,7 +90,6 @@ $(document).ready(function() {
   $(document).on("click", ".showGif", makeGifs);
 
 //****************************//
-
 
 });
 
