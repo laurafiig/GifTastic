@@ -16,7 +16,7 @@ $(document).ready(function() {
  
 //****************************// 
 
-  //function to populate gifs
+  //function to populate gifs and animate or still
   function makeGifs() { 
     //pull search term from button text
     searchName = $(this).text();
@@ -61,28 +61,41 @@ $(document).ready(function() {
       });
   }
 
-//****************************// 
+//****************************//
 
-  //call 'buttons from array' function
+function addButton() {
+    //read value from form
+    var newItem = $("#text").val();
+    //check for invalid input (empty or only spaces)
+    var notWS = /\S/g;
+    var chkAns = newItem.match(notWS);
+    //check for existing button
+    var exists = myStuff.indexOf(newItem);
+    if (chkAns != null && exists == -1) {
+      //add value to array
+      myStuff.push(newItem);
+      //clear existing buttons
+      $(".showGif").remove()
+      //call 'buttons from array' function    
+      makeButton();
+      //clear form
+      document.getElementById("newEntry").reset(); 
+      //stop re-run of function at outer level (propogation!!)
+      return false;
+    } else {
+      return false;
+    } 
+}
+
+//****************************//
+
+  //call 'buttons from array' function (automatic on page load)
   makeButton();
 
 //****************************// 
 
   //when add button is clicked
-  $("#add").on("click", function() {  
-    //read value from form
-    var newItem = $("#text").val();
-    //add value to array
-    myStuff.push(newItem);
-    //clear existing buttons
-    $(".showGif").remove()
-    //call 'buttons from array' function    
-    makeButton();
-    //clear form
-    document.getElementById("newEntry").reset(); 
-    //stop re-run of function at outer level (propogation!!)
-    return false;
-  });
+  $("#add").on("click", addButton);
 
 //****************************//
 
@@ -92,4 +105,3 @@ $(document).ready(function() {
 //****************************//
 
 });
-
