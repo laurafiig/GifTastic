@@ -3,7 +3,7 @@ $(document).ready(function() {
 //****************************// 
 
   //array of things I like
-  var myStuff = ["Puppies","Dogs","Mini Horses","Kittens","Ferrets","Baby Goats","Baby Animals","Tolkien","Harry Potter","Star Wars","Star Trek","Galaxies","Hawaii","Beaches","Mountains","Stained Glass","Fused Glass","Art Glass"]
+  var myStuff = ["puppies","dogs","mini horses","kittens","ferrets","baby goats","baby animals","tolkien","harry potter","star wars","star trek","galaxies","hawaii","beaches","mountains","stained glass","fused glass","art glass"]
 
 //****************************// 
   
@@ -65,7 +65,7 @@ $(document).ready(function() {
 
 function addButton() {
     //read value from form
-    var newItem = $("#text").val();
+    var newItem = $("#text").val().trim().toLowerCase();
     //check for invalid input (empty or only spaces)
     var notWS = /\S/g;
     var chkAns = newItem.match(notWS);
